@@ -16,7 +16,7 @@ export function Home() {
     if (foundExistingTask) {
       Alert.alert(
         'Task já cadastrada',
-        'Você não pode cadastrar uma task com o mesmo nome',
+        'Você não pode cadastrar uma task com o mesmo nome.',
         [
           {text: 'OK', onPress: () => console.log('OK button clicked')},
         ],
@@ -65,6 +65,19 @@ export function Home() {
     )
   }
 
+  function handleEditTask(taskId: number, taskNewTile: string) {
+
+    const updatedTaskName = tasks.map(task => ({ ...task }));
+    const foundItem = updatedTaskName.find(item => item.id === taskId);
+
+    if (!foundItem) {
+      return;
+    }
+
+    foundItem.title = taskNewTile
+    setTasks(updatedTaskName);
+  }
+
   return (
     <View style={styles.container}>
       <Header tasksCounter={tasks.length} />
@@ -75,6 +88,7 @@ export function Home() {
         tasks={tasks} 
         toggleTaskDone={handleToggleTaskDone}
         removeTask={handleRemoveTask} 
+        editTask={handleEditTask}
       />
     </View>
   )
